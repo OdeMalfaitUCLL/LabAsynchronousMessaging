@@ -58,7 +58,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApiError'
-      
+
 components:
   schemas:
     ApiDoctors:
@@ -87,6 +87,11 @@ components:
         address:
           type: string
           example: 'Naamsestraat 17, 300 Leuven'
+    CreateDoctorEvent:
+      type: object
+      properties:
+        doctor:
+          $ref: "#/components/schemas/ApiDoctor"
     ApiError:
       type: object
       properties:
@@ -97,4 +102,3 @@ components:
         message:
           type: string
           description: 'Brief explanation about the error, for more information consult the Doctor Service team'
-  
