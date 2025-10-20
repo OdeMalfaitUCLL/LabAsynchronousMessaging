@@ -1,6 +1,11 @@
 package be.ucll.da.doctorservice.domain;
 
+import be.ucll.da.doctorservice.adapters.messaging.RabbitMqConfig;
 import be.ucll.da.doctorservice.api.model.ApiDoctor;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +15,13 @@ import java.util.List;
 public class DoctorService {
 
     private final DoctorRepository repository;
+    private final EventSender eventSender;
 
     @Autowired
-    public DoctorService(DoctorRepository repository) {
+    public DoctorService(DoctorRepository repository, EventSender eventSender) {
         this.repository = repository;
+        this.eventSender = eventSender;
+
     }
 
     public void createDoctor(ApiDoctor data) {
@@ -26,6 +34,8 @@ public class DoctorService {
         );
 
         repository.save(doctor);
+        eventSender.sendDoctorCreatedEvent(doctor);
+
     }
 
     public List<Doctor> getDoctors(String fieldOfExpertise) {
