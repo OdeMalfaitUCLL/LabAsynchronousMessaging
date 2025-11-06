@@ -13,6 +13,10 @@ public class RabbitMqConfig {
     public Queue createDoctorCreatedQueue() {
         return new Queue("q.doctor-created");
     }
+    @Bean
+    public Queue doctorAppointmentQueue() {
+        return new Queue("q.doctor-appointment-service");
+    }
 
     @Bean
     public Jackson2JsonMessageConverter converter() {

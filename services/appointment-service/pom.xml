@@ -68,6 +68,12 @@
 			<scope>test</scope>
 		</dependency>
 
+        <!-- Sending messages with RabbitMQ over AMQP -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
 		<!-- Dependencies needed for generated classes -->
 		<dependency>
 			<groupId>org.openapitools</groupId>

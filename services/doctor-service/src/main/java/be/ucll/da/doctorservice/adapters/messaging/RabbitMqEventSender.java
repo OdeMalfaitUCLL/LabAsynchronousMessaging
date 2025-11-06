@@ -1,7 +1,9 @@
 package be.ucll.da.doctorservice.adapters.messaging;
 
-import be.ucll.da.appointmentservice.client.doctor.model.ApiDoctor;
-import be.ucll.da.appointmentservice.client.doctor.model.DoctorCreatedEvent;
+
+
+import be.ucll.da.doctorservice.api.model.ApiDoctor;
+import be.ucll.da.doctorservice.api.model.DoctorCreatedEvent;
 import be.ucll.da.doctorservice.domain.Doctor;
 import be.ucll.da.doctorservice.domain.EventSender;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
