@@ -28,13 +28,13 @@ public Declarables createDoctorCreatedSchema(){
             new Binding("q.doctor-appointment-service",
                     Binding.DestinationType.QUEUE,
                     "x.doctor-created",
-                    "doctor-appointment-service",
+                    "",
                     null),
             new Binding(
                     "q.doctor-notification-service",
                     Binding.DestinationType.QUEUE,
                     "x.doctor-created",
-                    "doctor-notification-service",
+                    "",
                     null)
     );
 }

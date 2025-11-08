@@ -1,7 +1,6 @@
 package be.ucll.da.notificationservice;
 
-import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.RetryInterceptorBuilder;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -14,6 +13,10 @@ import org.springframework.retry.interceptor.RetryOperationsInterceptor;
 
 @Configuration
 public class RabbitMqConfig {
+    @Bean
+    public FanoutExchange doctorCreatedExchange() {
+        return new FanoutExchange("x.doctor-created");
+    }
     @Bean
     public Jackson2JsonMessageConverter converter() {
         return new Jackson2JsonMessageConverter();
@@ -33,6 +36,12 @@ public class RabbitMqConfig {
                 .backOffOptions(2000, 2.0, 100000)
                 .recoverer(new RejectAndDontRequeueRecoverer())
                 .build();
+    }
+    @Bean
+    public Binding bindDoctorCreated(FanoutExchange doctorCreatedExchange,
+                                     Queue doctorNotificationQueue) {
+        return BindingBuilder.bind(doctorNotificationQueue)
+                .to(doctorCreatedExchange);
     }
 
     @Bean

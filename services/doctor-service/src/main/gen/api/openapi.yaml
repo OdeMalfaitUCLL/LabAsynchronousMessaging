@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  description: API for Doctor Service
+  termsOfService: http://swagger.io/terms/
+  title: Doctor Service API v1
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+- url: /
+tags:
+- description: specialist who sees patient for a certain domain of expertise
+  name: Doctor
+paths:
+  /api/v1/doctor:
+    get:
+      description: Get all Doctors from the system
+      operationId: getDoctors
+      parameters:
+      - description: Return all doctors that match this fieldOfExpertise
+        explode: true
+        in: query
+        name: fieldOfExpertise
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiDoctors'
+          description: Successful operation
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal Error
+      summary: Get all Doctors from the system
+      tags:
+      - Doctor
+      x-accepts:
+      - application/json
+    post:
+      description: Create a new Doctor
+      operationId: createDoctor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiDoctor'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal Error
+      tags:
+      - Doctor
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    ApiDoctors:
+      items:
+        $ref: '#/components/schemas/ApiDoctor'
+      type: array
+    ApiDoctor:
+      example:
+        firstName: Emily
+        lastName: Williams
+        address: "Naamsestraat 17, 300 Leuven"
+        id: 10
+        age: 43
+        fieldOfExpertise: Gastrology
+      properties:
+        id:
+          example: 10
+          format: int64
+          type: integer
+        firstName:
+          example: Emily
+          type: string
+        lastName:
+          example: Williams
+          type: string
+        age:
+          example: 43
+          type: integer
+        fieldOfExpertise:
+          example: Gastrology
+          type: string
+        address:
+          example: "Naamsestraat 17, 300 Leuven"
+          type: string
+      type: object
+    DoctorCreatedEvent:
+      properties:
+        doctor:
+          $ref: '#/components/schemas/ApiDoctor'
+      type: object
+    ApiError:
+      example:
+        code: "2300"
+        message: message
+      properties:
+        code:
+          description: Functional code specifying the error
+          example: "2300"
+          type: string
+        message:
+          description: "Brief explanation about the error, for more information consult\
+            \ the Doctor Service team"
+          type: string
+      type: object
+

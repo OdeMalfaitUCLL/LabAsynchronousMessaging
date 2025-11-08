@@ -102,4 +102,6 @@ components:
         message:
           type: string
           description: 'Brief explanation about the error, for more information consult the Doctor Service team'
-  
+
+servers:
+  - url: http://localhost:8080
